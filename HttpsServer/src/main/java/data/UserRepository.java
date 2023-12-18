@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository {
-    private String path;
-    private List<User> users;
+    private final String path;
+    private final List<User> users;
 
     public UserRepository(String path){
         this.path = path;
