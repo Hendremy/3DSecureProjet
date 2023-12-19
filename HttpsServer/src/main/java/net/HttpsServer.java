@@ -4,17 +4,17 @@ import javax.net.ssl.*;
 import java.io.*;
 import java.net.Socket;
 import java.security.KeyStore;
-import java.time.Duration;
+import java.util.stream.Collectors;
 
 public class HttpsServer {
     private final int port;
     private final SSLServerSocket serverSocket;
-    private final HttpRequestHandler handler;
+    private final HttpRequestHandler httpHandler;
 
     public HttpsServer(int port, String jksFilePath, HttpRequestHandler handler){
         this.port = port;
         this.serverSocket = initSocket(jksFilePath);
-        this.handler = handler;
+        this.httpHandler = handler;
     }
 
     private SSLServerSocket initSocket(String jksFilePath){
@@ -40,11 +40,11 @@ public class HttpsServer {
 
     public void start(){
         System.out.printf("HttpsServer:: HTTPS server running at 127.0.0.1:%d \n",this.port);
-        printServerSocketInfo( this.serverSocket);
+        //printServerSocketInfo( this.serverSocket);
         while(true){
             try{
                 SSLSocket socket = (SSLSocket) this.serverSocket.accept();
-                printSocketInfo(socket);
+                //printSocketInfo(socket);
                 new Thread(() -> handleConnection(socket)).start();
             }catch(IOException ex) {
 
@@ -54,22 +54,25 @@ public class HttpsServer {
 
     private void handleConnection(Socket socket){
         try{
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            String clientRequest;
-            HttpResponse serverResponse;
-
-            clientRequest = in.readLine();
-            serverResponse = handler.handle(clientRequest);
-            out.write(serverResponse.getResponse());
-            //out.write("HTTP/1.0 200 OK\nContent-Type: text/html\n\n<h1>hello</h1>");
+            String clientRequest = read(socket.getInputStream());
+            out.write(httpHandler.handle(clientRequest));
             out.flush();
-            System.out.println("Client disconnected");
             socket.close();
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
+
+    public String read(InputStream inputStream) throws IOException {
+        StringBuilder result = new StringBuilder();
+        do {
+            result.append((char) inputStream.read());
+        } while (inputStream.available() > 0);
+        return result.toString();
+    }
+
+
 
     private static void printServerSocketInfo(SSLServerSocket s) {
         System.out.println("Server socket class: "+s.getClass());

@@ -1,26 +1,41 @@
+import controller.HomeController;
+import controller.HttpController;
+import controller.PayController;
 import data.UserRepository;
-import domain.PageLoader;
+import data.PageLoader;
 import net.HttpRequestHandler;
 import net.HttpsServer;
 
 import java.io.File;
-import java.net.ServerSocket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main (String[] args){
         // Init file paths
-        String usersPath = new File("src/main/resources/users.txt").getAbsolutePath();
         String jksPath = new File("src/main/resources/server.jks").getAbsolutePath();
+        String usersPath = new File("src/main/resources/users.txt").getAbsolutePath();
         String pagesPath = new File("src/main/resources/pages").getAbsolutePath();
 
+        // Start server
+        HttpsServer server = new HttpsServer(8043, jksPath, initHttpHandler(pagesPath, usersPath));
+        server.start();
+    }
+
+    private static HttpRequestHandler initHttpHandler(String pagesPath, String usersPath){
         // Init services
-        PageLoader pageLoader = new PageLoader(pagesPath);
-        HttpRequestHandler httpRequestHandler = new HttpRequestHandler(pageLoader);
         UserRepository userRepository = new UserRepository(usersPath);
         userRepository.load();
+        PageLoader pageLoader = new PageLoader(pagesPath);
 
-        // Start server
-        HttpsServer server = new HttpsServer(8043, jksPath, httpRequestHandler);
-        server.start();
+        // Init controllers
+        PayController payController = new PayController(pageLoader);
+        HomeController homeController = new HomeController(pageLoader, userRepository);
+
+        Map<String, HttpController> httpControllers = new HashMap<>();
+        httpControllers.put("/", homeController);
+        httpControllers.put("/pay",payController);
+
+        return new HttpRequestHandler(httpControllers);
     }
 }

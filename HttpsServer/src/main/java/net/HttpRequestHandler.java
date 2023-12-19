@@ -1,28 +1,42 @@
 package net;
 
-import domain.PageLoader;
+import controller.HttpController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class HttpRequestHandler {
 
-    private final PageLoader loader;
+    private final Map<String, HttpController> controllers;
 
-    public HttpRequestHandler(PageLoader loader){
-        this.loader = loader;
+    public HttpRequestHandler(Map<String, HttpController> controllers){
+        this.controllers = controllers;
     }
 
-    public HttpResponse handle(String message){
-        HttpResponse response = new HttpResponse();
-        response.setContentType("text/html");
-        if(message.contains("GET")){
-            response.setStatus(HttpStatus.OK);
-            response.setContent(loader.getPageContent());
-        }else if(message.contains("POST")){
-            response.setStatus(HttpStatus.OK);
-            response.setContent(loader.getPageContent("payment.html"));
-        }else{
-            response.setStatus(HttpStatus.BAD_REQUEST);
-            response.setContent(loader.getPageContent("error.html"));
+    public String handle(String message){
+        HttpRequest request = parseRequest(message);
+        HttpController controller = this.controllers.get(request.getPath());
+        HttpResponse response = controller.handle(request);
+        return response.getResponse();
+    }
+
+    private HttpRequest parseRequest(String request){
+        String[] lines = request.split("\n");
+        String[] req = parseMethodPath(lines[0]);
+        return new HttpRequest(req[0], req[1], parseParams(lines[lines.length-1]));
+    }
+
+    private String[] parseMethodPath(String line){
+        return line.strip().split(" ");
+    }
+
+    private Map<String, String> parseParams(String line){
+        Map<String, String> paramMap = new HashMap<>();
+        String[] params = line.strip().split("&");
+        for(String param : params){
+            String[] values = param.split("=");
+            paramMap.put(values[0], values[1]);
         }
-        return response;
+        return paramMap;
     }
 }
