@@ -52,13 +52,23 @@ public class HttpsServer {
     private void handleConnection(Socket socket){
         try{
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-            out.println("<h1>Hello server</h1>");
+            String message = in.readLine();
+            out.write("HTTP/1.0 200 OK");
+            out.newLine();
+            out.write("Content-Type: text/html");
+            out.newLine();
+            out.newLine();
+            out.write("<html><body>Hello world !</body></html>");
+            out.newLine();
+            out.flush();
+
+            Thread.sleep(2000);
 
             socket.close();
-        }catch(IOException ex){
-
+        }catch(Exception ex){
+            ex.printStackTrace();
         }
     }
 
