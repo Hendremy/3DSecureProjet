@@ -6,6 +6,7 @@ import data.PageLoader;
 import net.HttpRequestHandler;
 import net.HttpsServer;
 import security.Authenticator;
+import security.SHA256Hash;
 
 import java.io.File;
 import java.util.HashMap;
@@ -28,7 +29,8 @@ public class Main {
         UserRepository userRepository = new UserRepository(usersPath);
         userRepository.load();
         PageLoader pageLoader = new PageLoader(pagesPath);
-        Authenticator authenticator = new Authenticator(userRepository.getUsers());
+        SHA256Hash hash = new SHA256Hash();
+        Authenticator authenticator = new Authenticator(userRepository.getUsers(), hash);
 
         // Init controllers
         PayController payController = new PayController(pageLoader, authenticator);

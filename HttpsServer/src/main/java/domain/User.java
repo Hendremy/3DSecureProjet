@@ -1,12 +1,15 @@
 package domain;
 
 public class User {
-    public User (String name, String password){
+    private final String name;
+    private final String password;
+    private final String salt;
+
+    public User (String name, String password, String salt){
         this.name = name;
         this.password = password;
+        this.salt = salt;
     }
-    private String name;
-    private String password;
 
     public String getName() {
         return name;
@@ -14,5 +17,9 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getSalt() {
+        return salt;
     }
 }

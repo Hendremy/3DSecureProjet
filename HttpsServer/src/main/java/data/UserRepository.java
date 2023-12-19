@@ -24,7 +24,7 @@ public class UserRepository {
             while(reader.ready()){
                 line = reader.readLine();
                 splitLine = line.split(",");
-                this.users.add(new User(splitLine[0], splitLine[1]));
+                this.users.add(new User(splitLine[0], splitLine[1], splitLine[2]));
             }
         }catch(IOException ex){
 
