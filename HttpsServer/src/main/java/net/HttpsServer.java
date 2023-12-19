@@ -59,15 +59,11 @@ public class HttpsServer {
             String clientRequest;
             HttpResponse serverResponse;
 
-            while(socket.isConnected()){
-                if(in.ready()) {
-                    clientRequest = in.readLine();
-                    serverResponse = handler.handle(clientRequest);
-                    out.write(serverResponse.getResponse());
-                    out.flush();
-                }
-                Thread.sleep(Duration.ofSeconds(1).toMillis());
-            }
+            clientRequest = in.readLine();
+            serverResponse = handler.handle(clientRequest);
+            out.write(serverResponse.getResponse());
+            //out.write("HTTP/1.0 200 OK\nContent-Type: text/html\n\n<h1>hello</h1>");
+            out.flush();
             System.out.println("Client disconnected");
             socket.close();
         }catch(Exception ex){

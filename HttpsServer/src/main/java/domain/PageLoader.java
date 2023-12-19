@@ -15,7 +15,7 @@ public class PageLoader {
     }
 
     public String getPageContent(String page){
-        try(BufferedReader reader = new BufferedReader(new FileReader(path+page))){
+        try(BufferedReader reader = new BufferedReader(new FileReader(path+"/"+page))){
             String content = "";
             while(reader.ready()){
                 content += reader.readLine();
