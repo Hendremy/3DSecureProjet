@@ -32,10 +32,13 @@ public class HttpRequestHandler {
 
     private Map<String, String> parseParams(String line){
         Map<String, String> paramMap = new HashMap<>();
+
         String[] params = line.strip().split("&");
         for(String param : params){
-            String[] values = param.split("=");
-            paramMap.put(values[0], values[1]);
+            if(!param.isEmpty()){
+                String[] values = param.split("=");
+                paramMap.put(values[0], values[1]);
+            }
         }
         return paramMap;
     }

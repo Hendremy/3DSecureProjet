@@ -5,6 +5,7 @@ import data.UserRepository;
 import data.PageLoader;
 import net.HttpRequestHandler;
 import net.HttpsServer;
+import security.Authenticator;
 
 import java.io.File;
 import java.util.HashMap;
@@ -27,10 +28,11 @@ public class Main {
         UserRepository userRepository = new UserRepository(usersPath);
         userRepository.load();
         PageLoader pageLoader = new PageLoader(pagesPath);
+        Authenticator authenticator = new Authenticator(userRepository.getUsers());
 
         // Init controllers
-        PayController payController = new PayController(pageLoader);
-        HomeController homeController = new HomeController(pageLoader, userRepository);
+        PayController payController = new PayController(pageLoader, authenticator);
+        HomeController homeController = new HomeController(pageLoader);
 
         Map<String, HttpController> httpControllers = new HashMap<>();
         httpControllers.put("/", homeController);
