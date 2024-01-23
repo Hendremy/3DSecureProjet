@@ -13,24 +13,14 @@ public class SSLClient implements Closeable{
     private BufferedReader in;
     private OutputStreamWriter out;
 
-    public SSLClient(String ip, int port, String jksPath) throws SSLClientException{
-        initSocket(ip, port, jksPath);
+    public SSLClient(String hostAuth, int portAuth, SSLContext sslContext) throws SSLClientException {
+        initSocket(hostAuth, portAuth, sslContext);
     }
 
-    private void initSocket(String ip, int port, String jksPath) throws SSLClientException{
+    private void initSocket(String ip, int port, SSLContext sslContext) throws SSLClientException{
         try{
-            char[] password = "heplhepl".toCharArray();
-            KeyStore keyStore = KeyStore.getInstance("JKS");
-            FileInputStream keyStoreFile = new FileInputStream(jksPath);
-            keyStore.load(keyStoreFile, password);
-
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
-            keyManagerFactory.init(keyStore, password);
-
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(),null, null);
-
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
             socket = (SSLSocket) sslSocketFactory.createSocket(ip, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new OutputStreamWriter(socket.getOutputStream());
@@ -49,6 +39,7 @@ public class SSLClient implements Closeable{
                 if(in.ready()){
                     response = in.readLine();
                 }else{
+                    wait++;
                     wait(1000);
                 }
             }
