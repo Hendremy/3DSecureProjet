@@ -22,7 +22,7 @@ public class AuthServer extends SSLServer {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(sslSocket.getOutputStream()));)
         {
             String message = in.readLine();
-            System.out.println("Received " + message);
+            log("Received " + message);
             out.println("OK;OK\n");
             out.flush();
         }catch (Exception ex){
