@@ -48,14 +48,14 @@ public class AuthClient {
     private String retrieveToken(String message) throws Exception{
         String[] splitMessage = message.split(";");
         String token = splitMessage[0];
-        //byte[] sig =  Base64.getEncoder().encode(splitMessage[1].getBytes(StandardCharsets.UTF_8));
+        byte[] sig =  Base64.getEncoder().encode(splitMessage[1].getBytes(StandardCharsets.UTF_8));
 
-        return token;
-        /*
+        //return token;
+
         if(signature.verify(sig, acsAlias)){
             return token;
         }else{
             throw new Exception("Invalid signature");
-        }*/
+        }
     }
 }

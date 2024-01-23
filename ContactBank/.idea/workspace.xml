@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8c91ce0-618b-472c-a298-ea07d0ac4cb0" name="Changes" comment="Start signer">
-      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/AuthClientHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/AuthServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/AuthServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/MoneyClientHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/MoneyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/MoneyServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/security/AuthClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/security/AuthClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +85,7 @@
       <workItem from="1706010972349" duration="6325000" />
       <workItem from="1706017309518" duration="732000" />
       <workItem from="1706027685153" duration="7317000" />
-      <workItem from="1706039340950" duration="118000" />
+      <workItem from="1706039340950" duration="465000" />
     </task>
     <task id="LOCAL-00001" summary="Basic send message to ACS">
       <option name="closed" value="true" />
@@ -114,16 +113,5 @@
     <MESSAGE value="Basic send message to ACS" />
     <MESSAGE value="Start signer" />
     <option name="LAST_COMMIT_MESSAGE" value="Start signer" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/security/AuthClient.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

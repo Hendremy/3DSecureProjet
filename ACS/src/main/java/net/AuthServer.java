@@ -23,7 +23,14 @@ public class AuthServer extends SSLServer {
         {
             String message = in.readLine();
             log("Received " + message);
-            out.println("OK;OK\n");
+
+            // TODO: Générer token & signer le message retour
+            String fakeSign = "";
+            for(int i = 0; i < 256; ++i){
+                fakeSign +="a";
+            }
+
+            out.println("OK;"+fakeSign);
             out.flush();
         }catch (Exception ex){
             ex.printStackTrace();

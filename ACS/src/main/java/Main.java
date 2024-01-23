@@ -20,8 +20,6 @@ public class Main {
         new Main().start();
     }
 
-    private boolean keepAlive = true;
-
     public void start(){
         try{
             String jksPath = new File("src/main/resources/acs.jks").getAbsolutePath();
@@ -40,25 +38,8 @@ public class Main {
             // Token Verify :   ACS <---> ACQ
             MoneyServer moneyServer = new MoneyServer(PORT_MONEY, sslContext, tokenRepository);
             moneyServer.start();
-
-            while(keepAlive){
-                Thread.sleep(500000);
-            }
-
-            //connectToACQ(jksPath);
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
-
-    /*
-    public void connectToACQ(SSLContext sslContext) {
-        SSLServer server = new SSLServer(PORT_MONEY, sslContext);
-        String token = server.start();
-        //Compare the token
-        if(token.equals(TOKEN_STORED))
-            returnHttpsServerStatement("ACK");
-        else
-            returnHttpsServerStatement("NACK");
-    }*/
 }

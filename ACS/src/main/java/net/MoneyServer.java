@@ -23,4 +23,15 @@ public class MoneyServer extends SSLServer {
             ex.printStackTrace();
         }
     }
+
+     /*
+    public void connectToACQ(SSLContext sslContext) {
+        SSLServer server = new SSLServer(PORT_MONEY, sslContext);
+        String token = server.start();
+        //Compare the token
+        if(token.equals(TOKEN_STORED))
+            returnHttpsServerStatement("ACK");
+        else
+            returnHttpsServerStatement("NACK");
+    }*/
 }
