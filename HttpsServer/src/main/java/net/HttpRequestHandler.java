@@ -16,6 +16,9 @@ public class HttpRequestHandler {
     public String handle(String message){
         HttpRequest request = parseRequest(message);
         HttpController controller = this.controllers.get(request.getPath());
+        if(controller == null){
+            controller = this.controllers.get("/");
+        }
         HttpResponse response = controller.handle(request);
         return response.getResponse();
     }
@@ -37,7 +40,7 @@ public class HttpRequestHandler {
         for(String param : params){
             if(!param.isEmpty()){
                 String[] values = param.split("=");
-                paramMap.put(values[0], values[1]);
+                paramMap.put(values[0], values.length >= 2 ? values[1] : "");
             }
         }
         return paramMap;
