@@ -52,21 +52,16 @@ public class Main {
 
     private final String acqPassword = "heplhepl";
     private final String acqKeyStorePassword = "heplhepl";
-    private boolean keepAlive = true;
 
     public void start(){
         try{
             String jksPath = new File("src/main/resources/acq.jks").getAbsolutePath();
             SSLContextLoader keyStoreLoader = new SSLContextLoader();
-            SSLContext sslContext = keyStoreLoader.loadSSLContext( jksPath, acqKeyStorePassword, acqKeyStorePassword);
+            SSLContext sslContext = keyStoreLoader.loadSSLContext( jksPath, acqKeyStorePassword, acqPassword);
 
             // Relay token verify :  HttpsServer <---> ACQ
-            MoneyRelayServer authServer = new MoneyRelayServer(PORT_HTTPS_ACQ, sslContext);
-            new Thread(authServer::start).start();
-
-            while(keepAlive){
-                Thread.sleep(500000);
-            }
+            MoneyRelayServer moneyRelayServer = new MoneyRelayServer(PORT_HTTPS_ACQ, sslContext);
+            moneyRelayServer.start();
         }catch(Exception ex){
             ex.printStackTrace();
         }

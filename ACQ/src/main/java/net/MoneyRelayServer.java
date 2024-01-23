@@ -17,9 +17,14 @@ public class MoneyRelayServer extends SSLServer{
         try(BufferedReader in = new BufferedReader( new InputStreamReader(sslSocket.getInputStream()));
             PrintWriter out = new PrintWriter(new OutputStreamWriter(sslSocket.getOutputStream()));)
         {
-            String message = in.readLine();
-            System.out.println("Received " + message);
-            out.println("OK;OK\n");
+            String response = "NACK";
+            String token = in.readLine();
+            log("Received token " + token);
+
+            // TODO: Create SSLClient to ACS and check if received token is ok
+            // response = client.send(token);
+
+            out.println(response);
             out.flush();
         }catch (Exception ex){
             ex.printStackTrace();
