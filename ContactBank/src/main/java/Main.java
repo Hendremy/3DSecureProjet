@@ -8,6 +8,8 @@ import security.SHA256Signature;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.File;
 import java.security.KeyStore;
 
@@ -32,7 +34,7 @@ public class Main {
     }
 
     private void start(){
-        String jksPath = new File("src/main/resources/customer.jks").getAbsolutePath();
+        String jksPath = new File("src/main/resources/client.jks").getAbsolutePath();
         String code = console.getInput("Enter your card number :");
         console.print("Waiting for server response ...");
 
@@ -56,8 +58,12 @@ public class Main {
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
         keyManagerFactory.init(keyStore, keyStorePassword.toCharArray());
 
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init(keyStore);
+        TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+
         SSLContext sslContext = SSLContext.getInstance("TLS");
-        sslContext.init(keyManagerFactory.getKeyManagers(),null, null);
+        sslContext.init(keyManagerFactory.getKeyManagers(),trustManagers, null);
 
         return sslContext;
     }

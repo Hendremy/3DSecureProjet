@@ -1,52 +1,54 @@
 package net;
 
-import javax.net.ssl.*;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.security.KeyStore;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import java.io.*;
 
-public class SSLClient {
+public class SSLClient implements Closeable{
+    private final int timeout = 10;
     private SSLSocket socket;
+    private BufferedReader in;
+    private OutputStreamWriter out;
 
-    public SSLClient(String ip, int port, String jksPath){
-        socket = initSocket(ip, port, jksPath);
+    public SSLClient(String hostAuth, int portAuth, SSLContext sslContext) throws SSLClientException {
+        initSocket(hostAuth, portAuth, sslContext);
     }
 
-    private SSLSocket initSocket(String ip, int port, String jksPath){
+    private void initSocket(String ip, int port, SSLContext sslContext) throws SSLClientException{
         try{
-            char[] password = "heplhepl".toCharArray();
-            KeyStore keyStore = KeyStore.getInstance("JKS");
-            FileInputStream keyStoreFile = new FileInputStream(jksPath);
-            keyStore.load(keyStoreFile, password);
-
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
-            keyManagerFactory.init(keyStore, password);
-
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(),null, null);
-
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
-            return (SSLSocket) sslSocketFactory.createSocket(ip, port);
+            socket = (SSLSocket) sslSocketFactory.createSocket(ip, port);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new OutputStreamWriter(socket.getOutputStream());
         }catch(Exception ex){
-            return null;
+            throw new SSLClientException(ex.getMessage());
         }
     }
 
-    /**
-     * The client socket will write the text to the server
-     * @param text: text to send
-     */
-    public void write(final String text) {
-        try {
-            OutputStream output = socket.getOutputStream();
-            PrintWriter writer = new PrintWriter(output, true);
-            writer.println(text);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+    public String send(String message) throws SSLClientException{
+        try{
+            int wait = 0;
+            String response = "";
+            out.write(message);
+
+            while(wait < timeout){
+                if(in.ready()){
+                    response = in.readLine();
+                }else{
+                    wait++;
+                    wait(1000);
+                }
+            }
+            return response;
+        }catch(IOException | InterruptedException ex){
+            throw new SSLClientException(ex.getMessage());
         }
     }
 
+    @Override
+    public void close() throws IOException {
+        socket.close();
+    }
 }

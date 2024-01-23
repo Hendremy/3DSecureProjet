@@ -6,37 +6,28 @@ import java.net.Socket;
 import java.security.KeyStore;
 import java.util.Base64;
 
-public class SSLServer {
+public abstract class SSLServer {
+    private final String serverName;
+    protected boolean keepAlive = true;
     private final int port;
     private final SSLServerSocket serverSocket;
-    public SSLServer(int port, String jksFilePath){
+    public SSLServer(int port, SSLContext sslContext, String serverName) throws Exception{
         this.port = port;
-        this.serverSocket = initSocket(jksFilePath);
+        this.serverSocket = initSocket(sslContext);
+        this.serverName = serverName;
     }
 
-    private SSLServerSocket initSocket(String jksFilePath){
+    private SSLServerSocket initSocket(SSLContext sslContext) throws Exception{
         try{
-            char[] password = "heplhepl".toCharArray();
-            KeyStore keyStore = KeyStore.getInstance("JKS");
-            FileInputStream keyStoreFile = new FileInputStream(jksFilePath);
-            keyStore.load(keyStoreFile, password);
-
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
-            keyManagerFactory.init(keyStore, password);
-
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(),null, null);
-
             SSLServerSocketFactory sslServerSocketFactory = sslContext.getServerSocketFactory();
-
             return (SSLServerSocket) sslServerSocketFactory.createServerSocket(this.port);
         }catch(Exception ex){
-            return null;
+            throw new Exception(ex);
         }
     }
 
-    public String start(){
-        System.out.printf("SSLServer:: SSL ACQ server running at 127.0.0.1:%d \n",this.port);
+    /*public void start(){
+        System.out.printf("%s:: %s running at 127.0.0.1:%d \n",this.serverName, this.serverName,this.port);
         try{
             SSLSocket socket = (SSLSocket) this.serverSocket.accept();
             socket.startHandshake();
@@ -46,8 +37,26 @@ public class SSLServer {
             System.out.print(ex.toString());
         }
         return "";
+    }*/
+
+    public final void start(){
+        System.out.printf("%s:: %s running at 127.0.0.1:%d \n",this.serverName, this.serverName,this.port);
+        while(keepAlive){
+            try{
+                SSLSocket socket = (SSLSocket) this.serverSocket.accept();
+                //socket.startHandshake();
+                new Thread(() -> handleClient(socket)).start();
+            }catch(IOException ex) {
+                System.out.println(ex.toString());
+            }
+        }
     }
 
+    protected void handleClient(SSLSocket sslSocket){
+
+    }
+
+    /*
     private void handleConnection(Socket socket){
         try{
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -66,6 +75,6 @@ public class SSLServer {
             result.append((char) inputStream.read());
         } while (inputStream.available() > 0);
         return result.toString();
-    }
+    }*/
 
 }

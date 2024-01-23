@@ -30,9 +30,9 @@ public class AuthClient {
             String today = ZonedDateTime.now( ZoneOffset.UTC ).format( DateTimeFormatter.ISO_INSTANT );
             String message = code + ";" + today;
             String response;
-            byte[] msgSig = signature.sign(message, clientAlias, clientPassword);
+            //byte[] msgSig = signature.sign(message, clientAlias, clientPassword);
 
-            message += ";" + Base64.getEncoder().encodeToString(msgSig);
+            //message += ";" + Base64.getEncoder().encodeToString(msgSig);
             System.out.println("Sending : " + message);
 
             response = client.send(message);
@@ -48,12 +48,14 @@ public class AuthClient {
     private String retrieveToken(String message) throws Exception{
         String[] splitMessage = message.split(";");
         String token = splitMessage[0];
-        byte[] sig =  Base64.getEncoder().encode(splitMessage[1].getBytes(StandardCharsets.UTF_8));
+        //byte[] sig =  Base64.getEncoder().encode(splitMessage[1].getBytes(StandardCharsets.UTF_8));
 
+        return token;
+        /*
         if(signature.verify(sig, acsAlias)){
             return token;
         }else{
             throw new Exception("Invalid signature");
-        }
+        }*/
     }
 }

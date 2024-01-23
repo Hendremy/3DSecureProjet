@@ -34,13 +34,14 @@ public class SSLClient implements Closeable{
             int wait = 0;
             String response = "";
             out.write(message);
+            out.flush();
 
-            while(wait < timeout){
+            while(wait < timeout && response.isEmpty()){
                 if(in.ready()){
                     response = in.readLine();
                 }else{
                     wait++;
-                    wait(1000);
+                    Thread.sleep(1000);
                 }
             }
             return response;

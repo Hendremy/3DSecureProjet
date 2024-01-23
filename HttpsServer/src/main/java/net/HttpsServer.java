@@ -48,7 +48,7 @@ public class HttpsServer {
                 //printSocketInfo(socket);
                 new Thread(() -> handleConnection(socket)).start();
             }catch(IOException ex) {
-
+                ex.printStackTrace();
             }
         }
     }
