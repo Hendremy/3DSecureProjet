@@ -39,7 +39,7 @@ public class Main {
     }
 
     private static void askTokenACS(String token) {
-        SSLClient client = new SSLClient("127.0.0.1", PORT_MONEY, "src/main/resources/server.jks");
+        SSLClient client = new SSLClient("127.0.0.1", PORT_MONEY, "src/main/resources/acq.jks");
         client.write(token);
     }
 }

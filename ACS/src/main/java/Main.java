@@ -8,7 +8,7 @@ public class Main {
     private static final int PORT_AUTH = 7777;
 
     public static void main(String[] args){
-        String jksPath = new File("src/main/resources/server.jks").getAbsolutePath();
+        String jksPath = new File("src/main/resources/acs.jks").getAbsolutePath();
         waitForConnections(jksPath);
     }
 
