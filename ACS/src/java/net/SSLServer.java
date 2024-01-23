@@ -4,17 +4,13 @@ import javax.net.ssl.*;
 import java.io.*;
 import java.net.Socket;
 import java.security.KeyStore;
-import java.util.stream.Collectors;
 
-public class HttpsServer {
+public class SSLServer {
     private final int port;
     private final SSLServerSocket serverSocket;
-    private final HttpRequestHandler httpHandler;
-
-    public HttpsServer(int port, String jksFilePath, HttpRequestHandler handler){
+    public SSLServer(int port, String jksFilePath){
         this.port = port;
         this.serverSocket = initSocket(jksFilePath);
-        this.httpHandler = handler;
     }
 
     private SSLServerSocket initSocket(String jksFilePath){
@@ -39,13 +35,11 @@ public class HttpsServer {
     }
 
     public void start(){
-        System.out.printf("HttpsServer:: HTTPS server running at 127.0.0.1:%d \n",this.port);
-        //printServerSocketInfo( this.serverSocket);
+        System.out.printf("SSLServer:: SSL server running at 127.0.0.1:%d \n",this.port);
         while(true){
             try{
                 SSLSocket socket = (SSLSocket) this.serverSocket.accept();
                 //socket.setTcpNoDelay(true);
-                //printSocketInfo(socket);
                 new Thread(() -> handleConnection(socket)).start();
             }catch(IOException ex) {
 
@@ -57,7 +51,7 @@ public class HttpsServer {
         try{
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             String clientRequest = read(socket.getInputStream());
-            out.write(httpHandler.handle(clientRequest));
+            out.write("");
             out.flush();
             socket.close();
         }catch(Exception ex){
@@ -71,39 +65,6 @@ public class HttpsServer {
             result.append((char) inputStream.read());
         } while (inputStream.available() > 0);
         return result.toString();
-    }
-
-
-
-    private static void printServerSocketInfo(SSLServerSocket s) {
-        System.out.println("Server socket class: "+s.getClass());
-        System.out.println("   Socket address = "
-                +s.getInetAddress().toString());
-        System.out.println("   Socket port = "
-                +s.getLocalPort());
-        System.out.println("   Need client authentication = "
-                +s.getNeedClientAuth());
-        System.out.println("   Want client authentication = "
-                +s.getWantClientAuth());
-        System.out.println("   Use client mode = "
-                +s.getUseClientMode());
-    }
-
-    private static void printSocketInfo(SSLSocket s) {
-        System.out.println("Socket class: "+s.getClass());
-        System.out.println("   Remote address = "
-                +s.getInetAddress().toString());
-        System.out.println("   Remote port = "+s.getPort());
-        System.out.println("   Local socket address = "
-                +s.getLocalSocketAddress().toString());
-        System.out.println("   Local address = "
-                +s.getLocalAddress().toString());
-        System.out.println("   Local port = "+s.getLocalPort());
-        System.out.println("   Need client authentication = "
-                +s.getNeedClientAuth());
-        SSLSession ss = s.getSession();
-        System.out.println("   Cipher suite = "+ss.getCipherSuite());
-        System.out.println("   Protocol = "+ss.getProtocol());
     }
 
 }
