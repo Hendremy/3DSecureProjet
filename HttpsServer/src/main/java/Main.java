@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    public static void main (String[] args){
+    public static void main (String[] args) {
         // Init file paths
         String jksPath = new File("src/main/resources/server.jks").getAbsolutePath();
         String usersPath = new File("src/main/resources/users.txt").getAbsolutePath();
