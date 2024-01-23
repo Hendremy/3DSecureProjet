@@ -7,6 +7,7 @@ import javax.net.ssl.SSLSocketFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.security.KeyStore;
 
 public class SSLClient {
@@ -44,9 +45,9 @@ public class SSLClient {
      */
     public void write(final String text) {
         try {
-            OutputStream output = this.socket.getOutputStream();
-            output.write(text.getBytes());
-            output.flush();
+            OutputStream output = socket.getOutputStream();
+            PrintWriter writer = new PrintWriter(output, true);
+            writer.println(text);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

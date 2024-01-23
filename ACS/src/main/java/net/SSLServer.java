@@ -35,18 +35,17 @@ public class SSLServer {
         }
     }
 
-    public void start(){
-        System.out.printf("SSLServer:: SSL server running at 127.0.0.1:%d \n",this.port);
-        while (true) {
-            try{
-                SSLSocket socket = (SSLSocket) this.serverSocket.accept();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String text = reader.readLine();
-                System.out.print(text);
-            }catch(IOException ex) {
-                System.err.print(ex.getMessage());
-            }
+    public String start(){
+        System.out.printf("SSLServer:: SSL ACQ server running at 127.0.0.1:%d \n",this.port);
+        try{
+            SSLSocket socket = (SSLSocket) this.serverSocket.accept();
+            socket.startHandshake();
+            BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
+            return in.readLine();
+        }catch(IOException ex) {
+            System.out.print(ex.toString());
         }
+        return "";
     }
 
     private void handleConnection(Socket socket){

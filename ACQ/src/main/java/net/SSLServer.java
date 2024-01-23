@@ -36,29 +36,21 @@ public class SSLServer {
         }
     }
 
-    public void start(){
-        System.out.printf("SSLServer:: SSL server running at 127.0.0.1:%d \n",this.port);
-        while(true){
-            try{
-                SSLSocket socket = (SSLSocket) this.serverSocket.accept();
-                //socket.setTcpNoDelay(true);
-                new Thread(() -> handleConnection(socket)).start();
-            }catch(IOException ex) {
-
-            }
-        }
-    }
-
-    private void handleConnection(Socket socket){
+    /**
+     * Will open the socket to get a result.
+     * @return the first response get
+     */
+    public String start(){
+        System.out.printf("SSLServer:: SSL ACQ server running at 127.0.0.1:%d \n",this.port);
         try{
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            String clientRequest = read(socket.getInputStream());
-            out.write("");
-            out.flush();
-            socket.close();
-        }catch(Exception ex){
-            ex.printStackTrace();
+            SSLSocket socket = (SSLSocket) this.serverSocket.accept();
+            socket.startHandshake();
+            BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
+            return in.readLine();
+        }catch(IOException ex) {
+            System.out.print(ex.toString());
         }
+        return "";
     }
 
     public String read(InputStream inputStream) throws IOException {
