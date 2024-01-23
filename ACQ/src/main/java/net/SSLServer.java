@@ -6,8 +6,10 @@ import java.net.Socket;
 import java.security.KeyStore;
 
 public class SSLServer {
+
     private final int port;
     private final SSLServerSocket serverSocket;
+
     public SSLServer(int port, String jksFilePath){
         this.port = port;
         this.serverSocket = initSocket(jksFilePath);

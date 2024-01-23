@@ -4,6 +4,7 @@ import javax.net.ssl.*;
 import java.io.*;
 import java.net.Socket;
 import java.security.KeyStore;
+import java.util.Base64;
 
 public class SSLServer {
     private final int port;
@@ -36,13 +37,14 @@ public class SSLServer {
 
     public void start(){
         System.out.printf("SSLServer:: SSL server running at 127.0.0.1:%d \n",this.port);
-        while(true){
+        while (true) {
             try{
                 SSLSocket socket = (SSLSocket) this.serverSocket.accept();
-                //socket.setTcpNoDelay(true);
-                new Thread(() -> handleConnection(socket)).start();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                String text = reader.readLine();
+                System.out.print(text);
             }catch(IOException ex) {
-
+                System.err.print(ex.getMessage());
             }
         }
     }
@@ -51,7 +53,7 @@ public class SSLServer {
         try{
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             String clientRequest = read(socket.getInputStream());
-            out.write("");
+            out.write(clientRequest);
             out.flush();
             socket.close();
         }catch(Exception ex){
