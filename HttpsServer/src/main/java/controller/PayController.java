@@ -28,6 +28,7 @@ public class PayController extends BaseHttpController {
         HttpResponse response = new HttpResponse();
         Map<String, String> params = request.getParameters();
 
+        // TODO: Prendre token des params et contacter ACQ pour vérifier le token
         response.setStatus(HttpStatus.UNAUTHORIZED);
         response.setContent(pageLoader.getPageContent("payment_nok.html"));
 
