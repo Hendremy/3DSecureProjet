@@ -18,7 +18,15 @@ public class MoneyServer extends SSLServer {
         try(BufferedReader in = new BufferedReader( new InputStreamReader(sslSocket.getInputStream()));
             PrintWriter out = new PrintWriter(new OutputStreamWriter(sslSocket.getOutputStream()));)
         {
+            String response = "NACK";
+            String token = in.readLine();
+            log("Received " + token);
+
             // TODO: Handle HttpsServer request : Validate received token
+
+
+            out.println("");
+            out.flush();
         }catch (Exception ex){
             ex.printStackTrace();
         }

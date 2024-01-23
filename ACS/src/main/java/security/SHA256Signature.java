@@ -6,6 +6,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.cert.Certificate;
+import java.util.Base64;
 
 public class SHA256Signature {
     private final KeyStore keyStore;
@@ -14,7 +15,7 @@ public class SHA256Signature {
         this.keyStore = keyStore;
     }
 
-    public byte[] sign(String message, String alias, String password) throws Exception{
+    public String sign(String message, String alias, String password) throws Exception{
         try{
             PrivateKey key = (PrivateKey) keyStore.getKey(alias, password.toCharArray());
 
@@ -25,20 +26,23 @@ public class SHA256Signature {
             sig.initSign(key);
             sig.update(data);
 
-            return sig.sign();
+            return Base64.getEncoder().encodeToString(sig.sign());
         }catch(Exception ex){
             throw new Exception(ex);
         }
     }
 
-    public boolean verify(byte[] signature, String alias) throws Exception{
+    public boolean verify(String message, byte[] signature, String alias) throws Exception{
         try{
             Certificate certificate = keyStore.getCertificate(alias);
             PublicKey publicKey = certificate.getPublicKey();
 
+            byte[] data = message.getBytes(StandardCharsets.UTF_8);
+
             Signature sig = Signature.getInstance("SHA256WithRSA");
+
             sig.initVerify(publicKey);
-            sig.update(signature);
+            sig.update(data);
 
             return sig.verify(signature);
         }catch(Exception ex){

@@ -30,12 +30,12 @@ public class AuthClient {
             String today = ZonedDateTime.now( ZoneOffset.UTC ).format( DateTimeFormatter.ISO_INSTANT );
             String message = code + ";" + today;
             String response;
-            byte[] msgSig = signature.sign(message, clientAlias, clientPassword);
+            message += ";" + signature.sign(message, clientAlias, clientPassword);
 
-            message += ";" + Base64.getEncoder().encodeToString(msgSig);
             System.out.println("Sending : " + message);
-
             response = client.send(message);
+
+            System.out.println("Received : " + response);
 
             return retrieveToken(response);
         }catch(SSLClientException ex){
@@ -47,15 +47,20 @@ public class AuthClient {
 
     private String retrieveToken(String message) throws Exception{
         String[] splitMessage = message.split(";");
-        String token = splitMessage[0];
-        byte[] sig =  Base64.getEncoder().encode(splitMessage[1].getBytes(StandardCharsets.UTF_8));
+        String ok = splitMessage[0];
 
-        //return token;
+        if(!ok.equals("OK")){
+            throw new AuthClientException("Denied by ACS");
+        }
 
-        if(signature.verify(sig, acsAlias)){
+        String token = splitMessage[1];
+        byte[] sig =  Base64.getDecoder().decode(splitMessage[2].getBytes(StandardCharsets.UTF_8));
+        String initialMessage = ok + ";" + token;
+
+        if(signature.verify(initialMessage, sig, acsAlias)){
             return token;
         }else{
-            throw new Exception("Invalid signature");
+            throw new AuthClientException("Invalid signature");
         }
     }
 }

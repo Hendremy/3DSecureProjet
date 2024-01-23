@@ -1,4 +1,5 @@
 import data.TokenRepository;
+import data.UserRepository;
 import security.KeyStoreLoader;
 import net.AuthServer;
 import net.MoneyServer;
@@ -14,6 +15,7 @@ public class Main {
     private static final int PORT_MONEY = 6666;
     private static final int PORT_AUTH = 7777;
     private static final String acsPassword = "heplhepl";
+    private static final String acsAlias = "acs";
     private static final String keyStorePassword = "heplhepl";
 
     public static void main(String[] args) {
@@ -28,11 +30,17 @@ public class Main {
             KeyStore keyStore = keyStoreLoader.load(jksPath, acsPassword);
 
             SSLContext sslContext = sslContextLoader.loadSSLContext(jksPath, keyStorePassword, acsPassword);
+            UserRepository userRepository = new UserRepository();
+            {
+                userRepository.register("AZERTY","client");
+                userRepository.register("TEST","client");
+                userRepository.register("123456789","client");
+            }
             TokenRepository tokenRepository = new TokenRepository();
             SHA256Signature sig = new SHA256Signature(keyStore);
 
             // Token Provider :  Client <---> ACS
-            AuthServer authServer = new AuthServer(PORT_AUTH, sslContext, tokenRepository, sig);
+            AuthServer authServer = new AuthServer(PORT_AUTH, sslContext, tokenRepository, userRepository, sig, acsAlias, acsPassword);
             new Thread(authServer::start).start();
 
             // Token Verify :   ACS <---> ACQ
