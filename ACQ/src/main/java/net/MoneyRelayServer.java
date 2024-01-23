@@ -24,7 +24,12 @@ public class MoneyRelayServer extends SSLServer{
             log("Received token " + token);
 
             SSLClient client = new SSLClient("127.0.0.1", 6666, this.sslContext);
+
+            log("Sending to ACS : " + token);
+
             String response = client.send(token);
+
+            log("Relaying to HttpServer : " + response);
 
             out.println(response);
             out.flush();

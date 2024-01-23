@@ -23,15 +23,13 @@ public class MoneyServer extends SSLServer {
             String token = in.readLine();
             log("Received " + token);
 
-            ZonedDateTime datetime = tokenRepository.get(in.readLine());
+            ZonedDateTime datetime = tokenRepository.get(token);
             //if the token doesn't exist (null) or the the time now is after the datetime + 1 hour (so invalidate)
-            if(datetime == null || ZonedDateTime.now().isAfter(datetime.plusHours(1)))
-                out.println("NACK");
-            else
-                out.println("ACK");
-            out.flush();
+            if(!(datetime == null || ZonedDateTime.now().isAfter(datetime.plusHours(1))))
+                response = "ACK";
 
-            out.println("");
+            log("Sending : " + response);
+            out.println(response);
             out.flush();
         }catch (Exception ex){
             ex.printStackTrace();

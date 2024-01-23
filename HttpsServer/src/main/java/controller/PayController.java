@@ -31,6 +31,7 @@ public class PayController extends BaseHttpController {
         String token = params.get("token");
         String result = sendToken(token);
 
+        System.out.println("Received from relay : " + result);
         if("ACK".equals(result)) {
             response.setStatus(HttpStatus.OK);
             response.setContent(pageLoader.getPageContent("payment_ok.html"));

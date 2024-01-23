@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8c91ce0-618b-472c-a298-ea07d0ac4cb0" name="Changes" comment="Start signer">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../HttpsServer/src/main/java/net/SSLClientFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ACQ/src/main/java/net/MoneyRelayServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACQ/src/main/java/net/MoneyRelayServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/MoneyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/MoneyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/SSLServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/SSLServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HttpsServer/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../HttpsServer/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../HttpsServer/src/main/java/controller/PayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../HttpsServer/src/main/java/controller/PayController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,13 +36,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "master",
+    "node.js.selected.package.tslint": "(autodetect)"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="security" />
