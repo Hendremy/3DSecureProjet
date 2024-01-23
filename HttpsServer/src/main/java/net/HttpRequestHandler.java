@@ -16,6 +16,9 @@ public class HttpRequestHandler {
     public String handle(String message){
         HttpRequest request = parseRequest(message);
         HttpController controller = this.controllers.get(request.getPath());
+        if(controller == null){
+            controller = this.controllers.get("/");
+        }
         HttpResponse response = controller.handle(request);
         return response.getResponse();
     }

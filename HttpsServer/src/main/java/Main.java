@@ -1,5 +1,6 @@
 import controller.HomeController;
 import controller.HttpController;
+import controller.LoginController;
 import controller.PayController;
 import data.UserRepository;
 import data.PageLoader;
@@ -33,12 +34,14 @@ public class Main {
         Authenticator authenticator = new Authenticator(userRepository.getUsers(), hash);
 
         // Init controllers
-        PayController payController = new PayController(pageLoader, authenticator);
+        LoginController loginController = new LoginController(pageLoader, authenticator);
         HomeController homeController = new HomeController(pageLoader);
+        PayController payController = new PayController(pageLoader);
 
         Map<String, HttpController> httpControllers = new HashMap<>();
         httpControllers.put("/", homeController);
-        httpControllers.put("/pay",payController);
+        httpControllers.put("/login",loginController);
+        httpControllers.put("/pay", payController);
 
         return new HttpRequestHandler(httpControllers);
     }

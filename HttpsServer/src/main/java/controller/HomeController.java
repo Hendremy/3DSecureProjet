@@ -9,11 +9,10 @@ import security.Authenticator;
 
 import java.util.Map;
 
-public class HomeController implements HttpController{
-    private final PageLoader loader;
+public class HomeController extends BaseHttpController{
 
     public HomeController(PageLoader loader){
-        this.loader = loader;
+        super(loader);
     }
 
     @Override
@@ -22,8 +21,6 @@ public class HomeController implements HttpController{
     }
 
     public HttpResponse get(HttpRequest request){
-        return new HttpResponse(HttpStatus.OK, "text/html", loader.getPageContent());
+        return new HttpResponse(HttpStatus.OK, pageLoader.getPageContent());
     }
-
-
 }

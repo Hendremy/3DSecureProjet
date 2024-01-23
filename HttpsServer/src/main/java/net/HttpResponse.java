@@ -7,8 +7,13 @@ public class HttpResponse {
     private String content;
 
     public HttpResponse(){
-
+        this.contentType = "text/html";
     }
+
+    public HttpResponse(HttpStatus status, String content){
+        this(status, "text/html", content);
+    }
+
     public HttpResponse(HttpStatus status, String contentType, String content){
         this.status = status;
         this.contentType = contentType;
