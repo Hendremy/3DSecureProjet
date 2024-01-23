@@ -4,39 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8c91ce0-618b-472c-a298-ea07d0ac4cb0" name="Changes" comment="Message signature">
-      <change afterPath="$PROJECT_DIR$/../ACQ/src/main/resources/acq.jks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ACS/src/main/java/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ACS/src/main/resources/acs.jks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/client.jks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../certs/acq.cer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../certs/acq.jks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../certs/acs.cer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../certs/acs.jks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../certs/client.cer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../certs/client.jks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../certs/server.cer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../certs/server.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACQ/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACQ/src/main/java/Main.java" afterDir="false" />
+    <list default="true" id="f8c91ce0-618b-472c-a298-ea07d0ac4cb0" name="Changes" comment="Start signer">
       <change beforePath="$PROJECT_DIR$/../ACQ/src/main/java/net/SSLClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACQ/src/main/java/net/SSLClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACQ/src/main/java/net/SSLServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACQ/src/main/java/net/SSLServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/java/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/java/net/SSLClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/SSLClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/java/net/SSLServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/SSLServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HttpsServer/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../HttpsServer/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HttpsServer/src/main/resources/generateJks" beforeDir="false" afterPath="$PROJECT_DIR$/../HttpsServer/src/main/resources/generateJks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HttpsServer/src/main/resources/server.jks" beforeDir="false" afterPath="$PROJECT_DIR$/../HttpsServer/src/main/resources/server.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +40,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging remy",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "/home/superremy/Documents/HEPL/MASI1 - 2023/Securite/3DSecureProjet/ACQ",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -138,7 +107,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Basic send message to ACS" />
     <MESSAGE value="Start signer" />
-    <MESSAGE value="Message signature" />
-    <option name="LAST_COMMIT_MESSAGE" value="Message signature" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start signer" />
   </component>
 </project>
