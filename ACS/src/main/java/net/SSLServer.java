@@ -2,9 +2,6 @@ package net;
 
 import javax.net.ssl.*;
 import java.io.*;
-import java.net.Socket;
-import java.security.KeyStore;
-import java.util.Base64;
 
 public abstract class SSLServer {
     private final String serverName;

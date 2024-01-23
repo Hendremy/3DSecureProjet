@@ -6,6 +6,7 @@ import data.UserRepository;
 import data.PageLoader;
 import net.HttpRequestHandler;
 import net.HttpsServer;
+import net.SSLClientFactory;
 import security.Authenticator;
 import security.SHA256Hash;
 import security.SSLContextLoader;
@@ -27,22 +28,23 @@ public class Main {
         // Start server
         SSLContextLoader sslContextLoader = new SSLContextLoader();
         SSLContext sslContext = sslContextLoader.loadSSLContext(jksPath, keyStorePassword, keyPassword);
-        HttpsServer server = new HttpsServer(8043, sslContext, initHttpHandler(pagesPath, usersPath));
+        HttpsServer server = new HttpsServer(8043, sslContext, initHttpHandler(pagesPath, usersPath, sslContext));
         server.start();
     }
 
-    private static HttpRequestHandler initHttpHandler(String pagesPath, String usersPath){
+    private static HttpRequestHandler initHttpHandler(String pagesPath, String usersPath, SSLContext sslContext){
         // Init services
         UserRepository userRepository = new UserRepository(usersPath);
         userRepository.load();
         PageLoader pageLoader = new PageLoader(pagesPath);
         SHA256Hash hash = new SHA256Hash();
         Authenticator authenticator = new Authenticator(userRepository.getUsers(), hash);
+        SSLClientFactory sslClientFactory = new SSLClientFactory(sslContext);
 
         // Init controllers
         LoginController loginController = new LoginController(pageLoader, authenticator);
         HomeController homeController = new HomeController(pageLoader);
-        PayController payController = new PayController(pageLoader);
+        PayController payController = new PayController(pageLoader, sslClientFactory);
 
         Map<String, HttpController> httpControllers = new HashMap<>();
         httpControllers.put("/", homeController);

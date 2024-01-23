@@ -1,16 +1,16 @@
 package controller;
 
 import data.PageLoader;
-import net.HttpRequest;
-import net.HttpResponse;
-import net.HttpStatus;
+import net.*;
 
 import java.util.Map;
 
 public class PayController extends BaseHttpController {
+    SSLClientFactory sslClientFactory;
 
-    public PayController(PageLoader pageLoader) {
+    public PayController(PageLoader pageLoader, SSLClientFactory sslClientFactory) {
         super(pageLoader);
+        this.sslClientFactory = sslClientFactory;
     }
 
     @Override
@@ -28,10 +28,28 @@ public class PayController extends BaseHttpController {
         HttpResponse response = new HttpResponse();
         Map<String, String> params = request.getParameters();
 
-        // TODO: Prendre token des params et contacter ACQ pour vérifier le token
-        response.setStatus(HttpStatus.UNAUTHORIZED);
-        response.setContent(pageLoader.getPageContent("payment_nok.html"));
+        String token = params.get("token");
+        String result = sendToken(token);
+
+        if("ACK".equals(result)) {
+            response.setStatus(HttpStatus.OK);
+            response.setContent(pageLoader.getPageContent("payment_ok.html"));
+        } else {
+            response.setStatus(HttpStatus.UNAUTHORIZED);
+            response.setContent(pageLoader.getPageContent("payment_nok.html"));
+        }
 
         return response;
     }
+
+    private String sendToken(String token) {
+        try {
+            SSLClient client = this.sslClientFactory.create();
+            return client.send(token);
+        } catch (SSLClientException e) {
+            e.printStackTrace();
+        }
+        return "NACK";
+    }
+
 }

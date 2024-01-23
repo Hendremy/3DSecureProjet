@@ -5,15 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8c91ce0-618b-472c-a298-ea07d0ac4cb0" name="Changes" comment="Start signer">
-      <change afterPath="$PROJECT_DIR$/../ACS/src/main/java/data/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/AuthServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/AuthServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../HttpsServer/src/main/java/net/SSLClientFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ACQ/src/main/java/net/MoneyRelayServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACQ/src/main/java/net/MoneyRelayServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/MoneyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/MoneyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/security/SHA256Signature.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/security/SHA256Signature.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/security/TokenGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/SSLServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/SSLServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/security/AuthClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/security/AuthClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/security/SHA256Signature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/security/SHA256Signature.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HttpsServer/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../HttpsServer/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HttpsServer/src/main/java/controller/PayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../HttpsServer/src/main/java/controller/PayController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,31 +35,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
-}</component>
   <component name="ProjectId" id="2bM39Sxmz6LgxovpryxHgzJIf2m" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/superremy/Documents/HEPL/MASI1 - 2023/Securite/3DSecureProjet/ACQ&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="security" />
@@ -69,7 +56,7 @@
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="ContactBank.main" />
+      <module name="ContactBank" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -93,6 +80,7 @@
       <workItem from="1706027685153" duration="7317000" />
       <workItem from="1706039340950" duration="465000" />
       <workItem from="1706040069197" duration="4161000" />
+      <workItem from="1706045592593" duration="372000" />
     </task>
     <task id="LOCAL-00001" summary="Basic send message to ACS">
       <option name="closed" value="true" />
@@ -115,6 +103,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Basic send message to ACS" />

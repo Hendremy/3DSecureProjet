@@ -5,6 +5,7 @@ import data.TokenRepository;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import java.io.*;
+import java.time.ZonedDateTime;
 
 public class MoneyServer extends SSLServer {
     private final TokenRepository tokenRepository;
@@ -22,8 +23,13 @@ public class MoneyServer extends SSLServer {
             String token = in.readLine();
             log("Received " + token);
 
-            // TODO: Handle HttpsServer request : Validate received token
-
+            ZonedDateTime datetime = tokenRepository.get(in.readLine());
+            //if the token doesn't exist (null) or the the time now is after the datetime + 1 hour (so invalidate)
+            if(datetime == null || ZonedDateTime.now().isAfter(datetime.plusHours(1)))
+                out.println("NACK");
+            else
+                out.println("ACK");
+            out.flush();
 
             out.println("");
             out.flush();
