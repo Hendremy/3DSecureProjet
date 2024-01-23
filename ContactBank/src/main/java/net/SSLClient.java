@@ -8,7 +8,6 @@ import java.io.*;
 import java.security.KeyStore;
 
 public class SSLClient implements Closeable{
-    private final int timeout = 10;
     private SSLSocket socket;
     private BufferedReader in;
     private OutputStreamWriter out;
@@ -31,21 +30,10 @@ public class SSLClient implements Closeable{
 
     public String send(String message) throws SSLClientException{
         try{
-            int wait = 0;
-            String response = "";
-            out.write(message);
+            out.write(message+"\n");
             out.flush();
-
-            while(wait < timeout && response.isEmpty()){
-                if(in.ready()){
-                    response = in.readLine();
-                }else{
-                    wait++;
-                    Thread.sleep(1000);
-                }
-            }
-            return response;
-        }catch(IOException | InterruptedException ex){
+            return in.readLine();
+        }catch(IOException ex){
             throw new SSLClientException(ex.getMessage());
         }
     }

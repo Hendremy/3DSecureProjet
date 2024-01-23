@@ -1,10 +1,7 @@
 import cli.Console;
 import net.SSLClient;
 import net.SSLClientException;
-import security.AuthClient;
-import security.AuthClientException;
-import security.KeyStoreLoader;
-import security.SHA256Signature;
+import security.*;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -26,7 +23,8 @@ public class Main {
 
     private final Console console;
     private final String clientAlias = "client";
-    private final String clientPassword = "password";
+    private final String clientPassword = "heplhepl";
+    private final String keyStorePassword = "heplhepl";
     private final String acsAlias = "acs";
 
     private Main(Console console){
@@ -39,10 +37,13 @@ public class Main {
         console.print("Waiting for server response ...");
 
         try{
-            String keyStorePassword = "heplhepl";
             KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
+            SSLContextLoader sslContextLoader = new SSLContextLoader();
+
+            SSLContext sslContext = sslContextLoader.loadSSLContext(jksPath, keyStorePassword, clientPassword);
+            SSLClient client = new SSLClient(HOST_AUTH, PORT_AUTH, sslContext);
             KeyStore keyStore = keyStoreLoader.load(jksPath, keyStorePassword);
-            SSLClient client = new SSLClient(HOST_AUTH, PORT_AUTH, getSSLContext(keyStore, keyStorePassword));
+
             SHA256Signature signature = new SHA256Signature(keyStore);
             AuthClient authClient = new AuthClient(client, signature, clientAlias, clientPassword, acsAlias);
             String token = authClient.authenticate(code);
@@ -52,19 +53,5 @@ public class Main {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private SSLContext getSSLContext(KeyStore keyStore, String keyStorePassword) throws Exception{
-        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
-        keyManagerFactory.init(keyStore, keyStorePassword.toCharArray());
-
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-        trustManagerFactory.init(keyStore);
-        TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
-
-        SSLContext sslContext = SSLContext.getInstance("TLS");
-        sslContext.init(keyManagerFactory.getKeyManagers(),trustManagers, null);
-
-        return sslContext;
     }
 }

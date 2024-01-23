@@ -11,30 +11,18 @@ public class HttpsServer {
     private final SSLServerSocket serverSocket;
     private final HttpRequestHandler httpHandler;
 
-    public HttpsServer(int port, String jksFilePath, HttpRequestHandler handler){
+    public HttpsServer(int port, SSLContext sslContext, HttpRequestHandler handler) throws Exception{
         this.port = port;
-        this.serverSocket = initSocket(jksFilePath);
+        this.serverSocket = initSocket(sslContext);
         this.httpHandler = handler;
     }
 
-    private SSLServerSocket initSocket(String jksFilePath){
+    private SSLServerSocket initSocket(SSLContext sslContext) throws Exception{
         try{
-            char[] password = "heplhepl".toCharArray();
-            KeyStore keyStore = KeyStore.getInstance("JKS");
-            FileInputStream keyStoreFile = new FileInputStream(jksFilePath);
-            keyStore.load(keyStoreFile, password);
-
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
-            keyManagerFactory.init(keyStore, password);
-
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(),null, null);
-
             SSLServerSocketFactory sslServerSocketFactory = sslContext.getServerSocketFactory();
-
             return (SSLServerSocket) sslServerSocketFactory.createServerSocket(this.port);
         }catch(Exception ex){
-            return null;
+            throw new Exception(ex);
         }
     }
 

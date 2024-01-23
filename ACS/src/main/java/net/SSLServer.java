@@ -26,25 +26,11 @@ public abstract class SSLServer {
         }
     }
 
-    /*public void start(){
-        System.out.printf("%s:: %s running at 127.0.0.1:%d \n",this.serverName, this.serverName,this.port);
-        try{
-            SSLSocket socket = (SSLSocket) this.serverSocket.accept();
-            socket.startHandshake();
-            BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
-            return in.readLine();
-        }catch(IOException ex) {
-            System.out.print(ex.toString());
-        }
-        return "";
-    }*/
-
     public final void start(){
-        System.out.printf("%s:: %s running at 127.0.0.1:%d \n",this.serverName, this.serverName,this.port);
+        log(String.format("%s running at 127.0.0.1:%d \n",this.serverName,this.port));
         while(keepAlive){
             try{
                 SSLSocket socket = (SSLSocket) this.serverSocket.accept();
-                //socket.startHandshake();
                 new Thread(() -> handleClient(socket)).start();
             }catch(IOException ex) {
                 System.out.println(ex.toString());
@@ -52,29 +38,16 @@ public abstract class SSLServer {
         }
     }
 
+    /**
+     * Override this method to handle client connections.
+     * @param sslSocket
+     */
     protected void handleClient(SSLSocket sslSocket){
-
+        // Do nothing
     }
 
-    /*
-    private void handleConnection(Socket socket){
-        try{
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            String clientRequest = read(socket.getInputStream());
-            out.write(clientRequest);
-            out.flush();
-            socket.close();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+    protected final void log(String message){
+        System.out.println(serverName + ":: " + message);
     }
-
-    public String read(InputStream inputStream) throws IOException {
-        StringBuilder result = new StringBuilder();
-        do {
-            result.append((char) inputStream.read());
-        } while (inputStream.available() > 0);
-        return result.toString();
-    }*/
 
 }

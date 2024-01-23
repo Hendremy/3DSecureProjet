@@ -1,5 +1,9 @@
-import net.SSLClient;
-import net.SSLServer;
+import javax.net.ssl.SSLContext;
+import java.io.File;
+import java.security.KeyStore;
+
+import net.MoneyRelayServer;
+import security.SSLContextLoader;
 
 public class Main {
 
@@ -7,6 +11,10 @@ public class Main {
     private static final int PORT_HTTPS_ACQ = 8888;
 
     public static void main(String[] args) {
+        new Main().start();
+    }
+
+    /*public static void main(String[] args) {
         //Will first connect to HTTPS Server
         SSLServer acqServer = new SSLServer(PORT_HTTPS_ACQ, "src/main/resources/acq.jks");
         String token = acqServer.start();
@@ -17,13 +25,13 @@ public class Main {
         }
         else
             askTokenACS(token);
-    }
+    }*/
 
     /**
      * Will ask ACS Server to know if the token is ok
      * @param token token asked
      */
-    private static void askTokenACS(final String token) {
+    /*private static void askTokenACS(final String token) {
         //Ask the ACS Server for the token
         SSLClient acqClient = new SSLClient("127.0.0.1", PORT_MONEY, "src/main/resources/acq.jks");
         acqClient.write(token);
@@ -31,14 +39,36 @@ public class Main {
         SSLServer acqServer = new SSLServer(PORT_MONEY, "src/main/resources/acq.jks");
         String resultACK = acqServer.start();
         returnHttpsServerStatement(resultACK);
-    }
+    }*/
 
     /**
      * Will return the statement to the HTTPS Server
      * @param text : ACK, NACK or ERROR_TOKEN
      */
-    private static void returnHttpsServerStatement(final String text) {
+    /*private static void returnHttpsServerStatement(final String text) {
         SSLClient httpsClient = new SSLClient("127.0.0.1", PORT_HTTPS_ACQ, "src/main/resources/acq.jks");
         httpsClient.write(text);
+    }*/
+
+    private final String acqPassword = "heplhepl";
+    private final String acqKeyStorePassword = "heplhepl";
+    private boolean keepAlive = true;
+
+    public void start(){
+        try{
+            String jksPath = new File("src/main/resources/acq.jks").getAbsolutePath();
+            SSLContextLoader keyStoreLoader = new SSLContextLoader();
+            SSLContext sslContext = keyStoreLoader.loadSSLContext( jksPath, acqKeyStorePassword, acqKeyStorePassword);
+
+            // Relay token verify :  HttpsServer <---> ACQ
+            MoneyRelayServer authServer = new MoneyRelayServer(PORT_HTTPS_ACQ, sslContext);
+            new Thread(authServer::start).start();
+
+            while(keepAlive){
+                Thread.sleep(500000);
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

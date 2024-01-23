@@ -8,20 +8,26 @@ import net.HttpRequestHandler;
 import net.HttpsServer;
 import security.Authenticator;
 import security.SHA256Hash;
+import security.SSLContextLoader;
 
+import javax.net.ssl.SSLContext;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws Exception{
         // Init file paths
         String jksPath = new File("src/main/resources/server.jks").getAbsolutePath();
+        String keyStorePassword = "heplhepl";
+        String keyPassword = "heplhepl";
         String usersPath = new File("src/main/resources/users.txt").getAbsolutePath();
         String pagesPath = new File("src/main/resources/pages").getAbsolutePath();
 
         // Start server
-        HttpsServer server = new HttpsServer(8043, jksPath, initHttpHandler(pagesPath, usersPath));
+        SSLContextLoader sslContextLoader = new SSLContextLoader();
+        SSLContext sslContext = sslContextLoader.loadSSLContext(jksPath, keyStorePassword, keyPassword);
+        HttpsServer server = new HttpsServer(8043, sslContext, initHttpHandler(pagesPath, usersPath));
         server.start();
     }
 

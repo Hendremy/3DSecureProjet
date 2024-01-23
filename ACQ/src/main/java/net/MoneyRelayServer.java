@@ -1,19 +1,15 @@
 package net;
 
-import data.TokenRepository;
-import security.SHA256Signature;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
-public class AuthServer extends SSLServer {
-    private final TokenRepository tokenRepository;
-    private final SHA256Signature sig;
-    public AuthServer(int port, SSLContext sslContext, TokenRepository tokenRepository, SHA256Signature sig) throws Exception {
-        super(port, sslContext, "AuthServer");
-        this.tokenRepository = tokenRepository;
-        this.sig = sig;
+public class MoneyRelayServer extends SSLServer{
+    public MoneyRelayServer(int port, SSLContext sslContext) throws Exception {
+        super(port, sslContext, "MoneyRelayServer");
     }
 
     @Override
