@@ -40,7 +40,7 @@ public class HttpRequestHandler {
         for(String param : params){
             if(!param.isEmpty()){
                 String[] values = param.split("=");
-                paramMap.put(values[0], values[1]);
+                paramMap.put(values[0], values.length >= 2 ? values[1] : "");
             }
         }
         return paramMap;
