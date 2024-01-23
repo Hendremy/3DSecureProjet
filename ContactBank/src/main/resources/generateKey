@@ -1,0 +1,1 @@
+ keytool -genkey -keyalg RSA -alias selfsigned -keystore customer.jks -storepass heplhepl -validity 360 -keysize 2048
