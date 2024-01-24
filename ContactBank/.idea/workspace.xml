@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8c91ce0-618b-472c-a298-ea07d0ac4cb0" name="Changes" comment="Start signer">
-      <change beforePath="$PROJECT_DIR$/../ACQ/src/main/java/net/MoneyRelayServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACQ/src/main/java/net/MoneyRelayServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ACS/src/main/java/net/MoneyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ACS/src/main/java/net/MoneyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HttpsServer/src/main/java/controller/PayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../HttpsServer/src/main/java/controller/PayController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +27,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
   <component name="ProjectId" id="2bM39Sxmz6LgxovpryxHgzJIf2m" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -38,8 +37,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -76,6 +77,7 @@
       <workItem from="1706039340950" duration="465000" />
       <workItem from="1706040069197" duration="4161000" />
       <workItem from="1706045592593" duration="372000" />
+      <workItem from="1706055960669" duration="22000" />
     </task>
     <task id="LOCAL-00001" summary="Basic send message to ACS">
       <option name="closed" value="true" />

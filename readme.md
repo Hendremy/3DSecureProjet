@@ -1,41 +1,33 @@
+# Répertoires
+
+Chaque répertoire contient un projet Java et correspond à un des acteurs de l'architecture 3D-Secure (Application tierce, Serveur Https, ACQ & ACS).
+
+# Version Java
+
+Java 17
+
+# Ports spécifiques utilisés
+
 PORT_AUTH = 7777
 
 PORT_MONEY = 6666
 
 PORT_HTTPS_ACQ = 8888
 
-# Certificats
+# Logins/Mots de passes
 
-3 serveurs, chacun à un jks (key store) dans lequel il doit contenir les certificats de ses amis
+## Pour le serveur HTTPS
 
-Client (app externe) => client.crt
+    Login       Mot de passe
+    -----       ------------
 
-Serveur Https => serveur.crt
+    cisco       cisco
+    user1       hepl
 
-ACS => acs.crt
+## Pour le ContactBank
 
-ACQ => acq.crt
-
-# Keystore
-
-Client (app externe) => acs.crt , client.crt + client.key
-
-Serveur https => acq.crt, serveurt.crt + serveur.key
-
-ACS => client.crt, acq.crt, acs.crt + acs.key
-
-ACQ => serveur.crt, acs.crt, acq.crt + acq.key
-
-# Commandes
-
-    keytool -importcert -file certificate.cer -keystore keystore.jks -alias "Alias"
-
-=> importer un certificat dans un keystore
-
-    keytool -exportcert -keystore [keystore] -alias [alias] -file [cert_file]
-
-=> exporter certificat
-
-     keytool -genkey -keyalg RSA -alias selfsigned -keystore server.jks -storepass heplhepl -validity 360 -keysize 2048
-
-=> générer keystore avec certificat
+    Code de carte
+    -------------
+    AZERTY
+    TEST
+    123456789
